@@ -37,7 +37,7 @@ enum eFlags {
 };
 };
 
-typedef __int32 uint32;
+typedef __int32 uint32_t;
 
 class TFile {
   HANDLE m_hFile;
@@ -45,20 +45,20 @@ class TFile {
 
 public:
   TFile() {}
-  TFile(const TFilePath &fname, uint32 flags = TFileConsts::kRead |
+  TFile(const TFilePath &fname, uint32_t flags = TFileConsts::kRead |
                                                TFileConsts::kDenyWrite |
                                                TFileConsts::kOpenExisting);
-  // TFile(const wchar_t *pwszFileName, uint32 flags = TFileConsts::kRead |
+  // TFile(const wchar_t *pwszFileName, uint32_t flags = TFileConsts::kRead |
   // TFileConsts::kDenyWrite | TFileConsts::kOpenExisting);
   // TFile(VDFileHandle h);
   ~TFile();
 
   bool open(const TFilePath &fname,
-            uint32 flags = TFileConsts::kRead | TFileConsts::kDenyWrite |
+            uint32_t flags = TFileConsts::kRead | TFileConsts::kDenyWrite |
                            TFileConsts::kOpenExisting);  // false if failed due
                                                          // to not found or
                                                          // already exists
-  // bool	open(const wchar_t *pwszFileName, uint32 flags =
+  // bool	open(const wchar_t *pwszFileName, uint32_t flags =
   // TFileConsts::kRead
   // | TFileConsts::kDenyWrite | TFileConsts::kOpenExisting);	// false if
   // failed due to not found or already exists
@@ -78,7 +78,7 @@ public:
 
 protected:
   bool open_internal(const TFilePath &fname,
-                     /* const wchar_t *pwszFilename, */ uint32 flags);
+                     /* const wchar_t *pwszFilename, */ uint32_t flags);
 
 private:
   TFile(const TFile &);

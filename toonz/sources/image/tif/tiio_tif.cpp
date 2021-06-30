@@ -112,9 +112,9 @@ void TifReader::open(FILE *file) {
     throw(str);
   }
 
-  uint32 w = 0, h = 0, rps = 0;
-  uint16 bps = 0, spp = 0;
-  uint32 tileWidth = 0, tileLength = 0;
+  uint32_t w = 0, h = 0, rps = 0;
+  uint16_t bps = 0, spp = 0;
+  uint32_t tileWidth = 0, tileLength = 0;
 
   // TIFFSetDirectory(m_tiff,1);
   // TIFFGetField(m_tiff, TIFFTAG_PAGENUMBER, &pn);
@@ -131,7 +131,7 @@ void TifReader::open(FILE *file) {
   TIFFGetField(m_tiff, TIFFTAG_TILELENGTH, &tileLength);
   Tiio::TifWriterProperties *prop = new Tiio::TifWriterProperties();
   m_info.m_properties             = prop;
-  uint16 orient                   = Tiio::TOP2BOTTOM;
+  uint16_t orient                   = Tiio::TOP2BOTTOM;
   if (TIFFGetField(m_tiff, TIFFTAG_ORIENTATION, &orient)) {
     switch (orient) {
     case ORIENTATION_TOPLEFT: /* row 0 top, col 0 lhs */
@@ -245,7 +245,7 @@ break;*/
 
   if (bps == 64 && spp == 3) bps = 16;  // immagine con bpp = 192
 
-  uint16 photometric;  // codice di controllo
+  uint16_t photometric;  // codice di controllo
   TIFFGetField(m_tiff, TIFFTAG_PHOTOMETRIC, &photometric);
   if (photometric == 3 &&
       (bps == 2 || bps == 4))  // immagini con PHOTOMATRIC_PALETTE
@@ -444,14 +444,14 @@ void TifReader::readLine(short *buffer, int x0, int x1, int shrink) {
 
     if (TIFFIsTiled(m_tiff)) {
       // Retrieve tiles size
-      uint32 tileWidth = 0, tileHeight = 0;
+      uint32_t tileWidth = 0, tileHeight = 0;
       TIFFGetField(m_tiff, TIFFTAG_TILEWIDTH, &tileWidth);
       TIFFGetField(m_tiff, TIFFTAG_TILELENGTH, &tileHeight);
       assert(tileWidth > 0 && tileHeight > 0);
 
       // Allocate a sufficient buffer to store a single tile
       int tileSize = tileWidth * tileHeight;
-      std::unique_ptr<uint64[]> tile(new uint64[tileSize]);
+      std::unique_ptr<uint64_t[]> tile(new uint64_t[tileSize]);
 
       int x = 0;
       int y = tileHeight * m_stripIndex;
@@ -477,12 +477,12 @@ void TifReader::readLine(short *buffer, int x0, int x1, int shrink) {
       }
     } else {
       int y  = m_rowsPerStrip * m_stripIndex;
-      int ok = TIFFReadRGBAStrip_64(m_tiff, y, (uint64 *)m_stripBuffer);
+      int ok = TIFFReadRGBAStrip_64(m_tiff, y, (uint64_t *)m_stripBuffer);
       assert(ok);
     }
   }
 
-  uint16 orient = ORIENTATION_TOPLEFT;
+  uint16_t orient = ORIENTATION_TOPLEFT;
   TIFFGetField(m_tiff, TIFFTAG_ORIENTATION, &orient);
 
   int r = m_rowsPerStrip - 1 - (m_row % m_rowsPerStrip);
@@ -577,13 +577,13 @@ void TifReader::readLine(char *buffer, int x0, int x1, int shrink) {
     m_stripIndex = stripIndex;
 
     if (TIFFIsTiled(m_tiff)) {
-      uint32 tileWidth = 0, tileHeight = 0;
+      uint32_t tileWidth = 0, tileHeight = 0;
       TIFFGetField(m_tiff, TIFFTAG_TILEWIDTH, &tileWidth);
       TIFFGetField(m_tiff, TIFFTAG_TILELENGTH, &tileHeight);
       assert(tileWidth > 0 && tileHeight > 0);
 
       int tileSize = tileWidth * tileHeight;
-      std::unique_ptr<uint32[]> tile(new uint32[tileSize]);
+      std::unique_ptr<uint32_t[]> tile(new uint32_t[tileSize]);
 
       int x = 0;
       int y = tileHeight * m_stripIndex;
@@ -606,12 +606,12 @@ void TifReader::readLine(char *buffer, int x0, int x1, int shrink) {
       }
     } else {
       int y  = m_rowsPerStrip * m_stripIndex;
-      int ok = TIFFReadRGBAStrip(m_tiff, y, (uint32 *)m_stripBuffer);
+      int ok = TIFFReadRGBAStrip(m_tiff, y, (uint32_t *)m_stripBuffer);
       assert(ok);
     }
   }
 
-  uint16 orient = ORIENTATION_TOPLEFT;
+  uint16_t orient = ORIENTATION_TOPLEFT;
   TIFFGetField(m_tiff, TIFFTAG_ORIENTATION, &orient);
 
   int r = m_rowsPerStrip - 1 - (m_row % m_rowsPerStrip);
@@ -642,7 +642,7 @@ void TifReader::readLine(char *buffer, int x0, int x1, int shrink) {
   }
 
   TPixel32 *pix = (TPixel32 *)buffer;
-  uint32 *v     = (uint32 *)(m_stripBuffer + r * stripRowSize);
+  uint32_t *v     = (uint32_t *)(m_stripBuffer + r * stripRowSize);
 
   pix += x0;
   v += x0;
@@ -651,7 +651,7 @@ void TifReader::readLine(char *buffer, int x0, int x1, int shrink) {
       (x1 < x0) ? (m_info.m_lx - 1) / shrink + 1 : (x1 - x0) / shrink + 1;
 
   for (int i = 0; i < width; i++) {
-    uint32 c = *v;
+    uint32_t c = *v;
     pix->r   = (UCHAR)TIFFGetR(c);
     pix->g   = (UCHAR)TIFFGetG(c);
     pix->b   = (UCHAR)TIFFGetB(c);

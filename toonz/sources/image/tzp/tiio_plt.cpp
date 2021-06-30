@@ -130,7 +130,7 @@ int ComboInkIndex[256];  // a bad patch....
 
 void PltReader::open(FILE *file) {
   char *data;
-  uint32 count;
+  uint32_t count;
   int i;
   for (i = 0; i < 256; i++) ComboInkIndex[i] = -1;
 
@@ -143,9 +143,9 @@ void PltReader::open(FILE *file) {
 
   if (!m_tiff) return;
 
-  uint32 w = 0, h = 0, rps = 0;
-  uint32 tileWidth = 0, tileLength = 0;
-  uint16 bps = 0, spp = 0;
+  uint32_t w = 0, h = 0, rps = 0;
+  uint32_t tileWidth = 0, tileLength = 0;
+  uint16_t bps = 0, spp = 0;
 
   TIFFGetField(m_tiff, TIFFTAG_IMAGEWIDTH, &w);
   TIFFGetField(m_tiff, TIFFTAG_IMAGELENGTH, &h);
@@ -162,7 +162,7 @@ void PltReader::open(FILE *file) {
   TIFFGetField(m_tiff, TIFFTAG_TILEWIDTH, &tileWidth);
   TIFFGetField(m_tiff, TIFFTAG_TILELENGTH, &tileLength);
 
-  uint32 risCount  = 0;
+  uint32_t risCount  = 0;
   USHORT *risArray = 0;
 
   m_info.m_lx = w;
@@ -202,7 +202,7 @@ void PltReader::open(FILE *file) {
     m_rowLength   = w;
   }
 
-  uint32 paletteCount;
+  uint32_t paletteCount;
   USHORT *palette;
 
   TIFFGetField(m_tiff, TIFFTAG_TOONZPALETTE, &paletteCount, &palette);
@@ -261,7 +261,7 @@ void PltReader::open(FILE *file) {
   if (TIFFGetField(m_tiff, TIFFTAG_TOONZHISTORY, &count, &data))
     m_history = data;
 
-  uint16 photometric, planarconfig;
+  uint16_t photometric, planarconfig;
 
   TIFFGetField(m_tiff, TIFFTAG_PHOTOMETRIC, &photometric);
   TIFFGetField(m_tiff, TIFFTAG_PLANARCONFIG, &planarconfig);

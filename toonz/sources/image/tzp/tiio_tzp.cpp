@@ -82,8 +82,8 @@ void TzpReader::open(FILE *file) {
   TIFFSetWarningHandler(oldhandler);
   if (!m_tiff) return;
 
-  uint32 w = 0, h = 0, bps = 0, spp = 0, rps = 0;
-  uint32 tileWidth = 0, tileLength = 0;
+  uint32_t w = 0, h = 0, bps = 0, spp = 0, rps = 0;
+  uint32_t tileWidth = 0, tileLength = 0;
 
   TIFFGetField(m_tiff, TIFFTAG_IMAGEWIDTH, &w);
   TIFFGetField(m_tiff, TIFFTAG_IMAGELENGTH, &h);
@@ -100,7 +100,7 @@ void TzpReader::open(FILE *file) {
   TIFFGetField(m_tiff, TIFFTAG_TILEWIDTH, &tileWidth);
   TIFFGetField(m_tiff, TIFFTAG_TILELENGTH, &tileLength);
 
-  uint32 risCount  = 0;
+  uint32_t risCount  = 0;
   USHORT *risArray = 0;
 
   m_info.m_lx = w;
@@ -137,7 +137,7 @@ void TzpReader::open(FILE *file) {
     m_rowLength   = w;
   }
 
-  uint32 paletteCount;
+  uint32_t paletteCount;
   USHORT *palette;
 
   TIFFGetField(m_tiff, TIFFTAG_TOONZPALETTE, &paletteCount, &palette);
@@ -155,11 +155,11 @@ void TzpReader::open(FILE *file) {
     m_isCmap24 = false;
 
   char *data;
-  uint32 count;
+  uint32_t count;
   TIFFGetField(m_tiff, TIFFTAG_TOONZHISTORY, &count, &data);
   std::string history(data);
 
-  uint16 planarconfig;
+  uint16_t planarconfig;
   TIFFGetField(m_tiff, TIFFTAG_PLANARCONFIG, &planarconfig);
   if (planarconfig == PLANARCONFIG_SEPARATE) {
     // tmsg_error("separate buffer image not supported yet in .tz(up) files");

@@ -11,7 +11,7 @@ namespace {
 */
 using namespace TFileConsts;
 
-TFile::TFile(const TFilePath &fname, uint32 flags) : m_hFile(NULL), m_ec(0) {
+TFile::TFile(const TFilePath &fname, uint32_t flags) : m_hFile(NULL), m_ec(0) {
   open_internal(fname, /*NULL,*/ flags);
 }
 
@@ -21,14 +21,14 @@ TFile::~TFile() { close(); }
 
 //------------------------------------------------------------------------------
 
-bool TFile::open(const TFilePath &fname, uint32 flags) {
+bool TFile::open(const TFilePath &fname, uint32_t flags) {
   return open_internal(fname, flags);
 }
 
 //------------------------------------------------------------------------------
 
 bool TFile::open_internal(const TFilePath &fname,
-                          /*const wchar_t *pwszFilename,*/ uint32 flags) {
+                          /*const wchar_t *pwszFilename,*/ uint32_t flags) {
   close();
 
   // At least one of the read/write flags must be set.
@@ -51,7 +51,7 @@ bool TFile::open_internal(const TFilePath &fname,
 
   DWORD dwCreationDisposition;
 
-  uint32 creationType = flags & kCreationMask;
+  uint32_t creationType = flags & kCreationMask;
 
   switch (creationType) {
   case kOpenExisting:
